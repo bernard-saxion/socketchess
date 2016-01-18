@@ -7,7 +7,7 @@ package socketchess;
 
 /**
  *
- * @author espinosa
+ * @author espinosa baeza
  */
 public class SocketChess {
 
