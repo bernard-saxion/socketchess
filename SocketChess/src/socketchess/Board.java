@@ -58,11 +58,19 @@ public class Board implements ActionListener
 		{
 			for(int j=7;j>=0;j--)
 			{
-				field[i][j]=new Position(i+1,j+1);
+                            if(Side.black==playingas)
+                            {
+                                field[i][j]=new Position(-(i+1)+9,j+1);
+                            }
+                            else
+                            {
+				field[i][j]=new Position(i+1,-(j+1)+9);
+                            }
 				field[i][j].setBounds(i*butsize,j*butsize,butsize,butsize);
                                 field[i][j].addActionListener(this);
 				applet.add(field[i][j]);
 				System.out.println("button at "+(i*butsize) + ", "+ (j*butsize));
+                                
 			}
 		}
 	}
