@@ -16,7 +16,7 @@ public class Position extends Button
 {
     private int row;
     private int column;
-    private Piece occupant=Piece.none;
+    private Piece piece=Piece.none;
 
     public Position(final int column,final int row)
     {
@@ -44,8 +44,19 @@ public class Position extends Button
         this(pos.charAt(0),(byte)(pos.charAt(1)-'0'));
     }
     
+    @Override
     public String toString()
     {
         return ""+(char)(column+('A'-1))+row;
+    }
+    
+    public Piece get_piece()
+    {
+    return(piece);
+    }
+    
+    public void set_piece(Piece piece)
+    {
+        this.piece=piece;
     }
 }
