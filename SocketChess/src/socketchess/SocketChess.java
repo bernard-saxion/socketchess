@@ -56,11 +56,11 @@ public class SocketChess extends Applet implements ActionListener
     {
         if(ae.getSource()==asclient)
         {
-            
+            new Board(Side.white).init(this);
         }
         if(ae.getSource()==asserver)
         {
-            
+            new Board(Side.black).init(this);
         }
     }
 }

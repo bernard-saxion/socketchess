@@ -14,7 +14,7 @@ import java.awt.event.*;
  *
  * @author saxion
  */
-public class Board extends Applet implements ActionListener
+public class Board implements ActionListener
 {
 	Button field[][]=new Button[8][8];
         Image white_pawn;
@@ -30,24 +30,30 @@ public class Board extends Applet implements ActionListener
         Image black_queen;
         Image black_king;
 
-	static int butsize=80;
+	final static int butsize=80;
+        final Side playingas;
 
-        @Override
-	public void init()
+        public Board(final Side playas)
+        {
+            this.playingas=playas;
+        }
+        
+	public void init(final Applet applet)
 	{
-		setLayout(null);
-                white_pawn=getImage(getDocumentBase(),"white_pawn.png");
-                white_knight=getImage(getDocumentBase(),"white_knight.png");
-                white_bishop=getImage(getDocumentBase(),"white_bishop.png");
-                white_tower=getImage(getDocumentBase(),"white_tower.png");
-                white_queen=getImage(getDocumentBase(),"white_queen.png");
-                white_king=getImage(getDocumentBase(),"white_king.png");
-                black_pawn=getImage(getDocumentBase(),"black_pawn.png");
-                black_knight=getImage(getDocumentBase(),"black_knight.png");
-                black_bishop=getImage(getDocumentBase(),"black_bishop.png");
-                black_tower=getImage(getDocumentBase(),"black_tower.png");
-                black_queen=getImage(getDocumentBase(),"black_queen.png");
-                black_king=getImage(getDocumentBase(),"black_king.png");
+                applet.removeAll();
+		applet.setLayout(null);
+                white_pawn=applet.getImage(applet.getDocumentBase(),"white_pawn.png");
+                white_knight=applet.getImage(applet.getDocumentBase(),"white_knight.png");
+                white_bishop=applet.getImage(applet.getDocumentBase(),"white_bishop.png");
+                white_tower=applet.getImage(applet.getDocumentBase(),"white_tower.png");
+                white_queen=applet.getImage(applet.getDocumentBase(),"white_queen.png");
+                white_king=applet.getImage(applet.getDocumentBase(),"white_king.png");
+                black_pawn=applet.getImage(applet.getDocumentBase(),"black_pawn.png");
+                black_knight=applet.getImage(applet.getDocumentBase(),"black_knight.png");
+                black_bishop=applet.getImage(applet.getDocumentBase(),"black_bishop.png");
+                black_tower=applet.getImage(applet.getDocumentBase(),"black_tower.png");
+                black_queen=applet.getImage(applet.getDocumentBase(),"black_queen.png");
+                black_king=applet.getImage(applet.getDocumentBase(),"black_king.png");
 		for(int i=7;i>=0;i--)
 		{
 			for(int j=7;j>=0;j--)
@@ -58,22 +64,12 @@ public class Board extends Applet implements ActionListener
 					field[i][j].setBackground(Color.white);
 				else
 					field[i][j].setBackground(Color.black);
-				add(field[i][j]);
+				applet.add(field[i][j]);
 				System.out.println("button at "+(i*butsize) + ", "+ (j*butsize));
 			}
 		}
 	}
 
-	public static void main(String[] args)
-	{
-		Frame f=new Frame();
-		Board listner=new Board();
-		f.setSize(8*butsize,8*butsize);
-		f.add(listner);
-		listner.init();
-		f.addWindowListener(new MyWindow());
-		f.setVisible(true);
-	}
         @Override
         public void actionPerformed(ActionEvent event){
         }

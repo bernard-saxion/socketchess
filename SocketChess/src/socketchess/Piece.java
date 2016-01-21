@@ -8,8 +8,6 @@ import java.awt.Image;
  * @author saxion
  */
 public class Piece {
-    /** Identifiers for the two players in chess. also a special <code>Side.none</code>. */
-    public enum Side { none, black, white, };
     /** Identifiers to differentiate between the different types of pieces in chess with their unique behaviour. Also a special <code>Type.none</code>. */
     public enum Type
     {
