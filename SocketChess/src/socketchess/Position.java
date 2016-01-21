@@ -5,30 +5,47 @@
  */
 package socketchess;
 
+import java.awt.Button;
+import java.awt.Color;
+
 /**
  *
  * @author saxion
  */
-public class Position {
-    private byte row;
-    private char column;
-    public Position(final byte column,final byte row)
+public class Position extends Button
+{
+    private int row;
+    private int column;
+    private Piece occupant=Piece.none;
+
+    public Position(final int column,final int row)
     {
-        this((char)(column+'A'),row);
+        this((char)(column+('A'-1)),row);
     }
-    
-    public Position(final char column, final byte row)
+
+    public Position(final char column, final int row)
     {
-        if(!((column>='A'&&column<='G')||(column>='a'&&column<='g')))
+        if(!((column>='A'&&column<='H')||(column>='a'&&column<='h')))
             throw new IllegalArgumentException("column must be between 'A' and 'G', was '"+column+'\'');
         if(!(row>=1&&row<=8))
             throw new IllegalArgumentException("row must be between 1 and 8, was '"+row+'\'');
         this.row=row;
-        this.column=column;
+        this.column=column-('A'-1); // FIXME: watch out for lowercase
+        
+        if((row%2==0) ^ (column%2==0))
+                setBackground(Color.white);
+        else
+                setBackground(Color.black);
+        
     }
     
     public Position(final String pos)
     {
         this(pos.charAt(0),(byte)(pos.charAt(1)-'0'));
+    }
+    
+    public String toString()
+    {
+        return ""+(char)(column+('A'-1))+row;
     }
 }

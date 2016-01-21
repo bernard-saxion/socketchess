@@ -16,7 +16,7 @@ import java.awt.event.*;
  */
 public class Board implements ActionListener
 {
-	Button field[][]=new Button[8][8];
+	Position field[][]=new Position[8][8];
         Image white_pawn;
         Image white_knight;
         Image white_bishop;
@@ -58,12 +58,9 @@ public class Board implements ActionListener
 		{
 			for(int j=7;j>=0;j--)
 			{
-				field[i][j]=new Button();
+				field[i][j]=new Position(i+1,j+1);
 				field[i][j].setBounds(i*butsize,j*butsize,butsize,butsize);
-				if((i%2==0) ^ (j%2==0))
-					field[i][j].setBackground(Color.white);
-				else
-					field[i][j].setBackground(Color.black);
+                                field[i][j].addActionListener(this);
 				applet.add(field[i][j]);
 				System.out.println("button at "+(i*butsize) + ", "+ (j*butsize));
 			}
@@ -72,6 +69,7 @@ public class Board implements ActionListener
 
         @Override
         public void actionPerformed(ActionEvent event){
+            System.out.println("pressed "+event.getSource());
         }
 }
 
