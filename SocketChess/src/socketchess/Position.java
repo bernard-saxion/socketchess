@@ -33,9 +33,9 @@ public class Position extends Button
         this.column=column-('A'-1); // FIXME: watch out for lowercase
         
         if((row%2==0) ^ (column%2==0))
-                setBackground(Color.RED);
-        else
                 setBackground(Color.yellow);
+        else
+                setBackground(Color.red);
         
     }
     
