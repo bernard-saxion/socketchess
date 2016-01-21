@@ -8,6 +8,7 @@ package socketchess;
 import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.awt.event.ActionListener;
  */
 public class SocketChess extends Applet implements ActionListener
 {
+    private Board board = null;
     private final Button asclient = new Button("Play as white (client)");
     private final Button asserver = new Button("Play as black (server)");
     
@@ -56,11 +58,20 @@ public class SocketChess extends Applet implements ActionListener
     {
         if(ae.getSource()==asclient)
         {
-            new Board(Side.white).init(this);
+            board=new Board(Side.white);
+            board.init(this);
         }
         if(ae.getSource()==asserver)
         {
-            new Board(Side.black).init(this);
+            board=new Board(Side.black);
+            board.init(this);
         }
     }
+    @Override
+     public void paint(Graphics g)
+     {
+         if(null!=board)board.paint(g, this);
+     }
+     
+             
 }
