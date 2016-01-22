@@ -7,6 +7,9 @@ package socketchess;
 
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
+import static java.awt.Font.PLAIN;
+import javax.swing.JLabel;
 
 /**
  *
@@ -33,10 +36,15 @@ public class Position extends Button
         this.column=column-('A'-1); // FIXME: watch out for lowercase
         
         if((row%2==0) ^ (column%2==0))
-                setBackground(Color.RED);
-        else
                 setBackground(Color.yellow);
+        else
+                setBackground(Color.red);
         
+        Font auxFont=this.getFont();
+        if(null!=auxFont)
+            this.setFont(new Font(auxFont.getFontName(),auxFont.getStyle(),70));
+        else
+            this.setFont(new Font(null,PLAIN,65));
     }
     
     public Position(final String pos)

@@ -8,7 +8,6 @@ package socketchess;
 import java.applet.Applet;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Label;
 import java.awt.TextField;
 import java.awt.event.ActionEvent;
