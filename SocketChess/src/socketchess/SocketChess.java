@@ -66,12 +66,12 @@ public class SocketChess extends Applet implements ActionListener
             board=new Board(Side.black);
             board.init(this);
         }
-    }
+    }/*
     @Override
      public void paint(Graphics g)
      {
          if(null!=board)board.paint(g, this);
      }
-     
+     */
              
 }

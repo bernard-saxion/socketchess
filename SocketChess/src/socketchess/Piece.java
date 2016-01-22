@@ -13,7 +13,7 @@ public class Piece {
     {
         none,
         king, queen,
-        bishop, knight, tower,
+        bishop, knight, rook,
         pawn,
     };
     /** The colour of this piece, or to which side this piece belongs, or which player controls this piece. */
@@ -27,7 +27,13 @@ public class Piece {
      * 
      * The <code>none</code> piece has symbol '<code>-</code>'
      */
-    public final char symbol;
+        
+    private char symbol;
+
+    @Override
+    public String toString(){
+    return(side.toString().substring(0,1)+symbol);
+    }
     
     /** Explicitly not a chess piece. Alternative to <code>null</code>. neither on <code>Side.black</code> nor <code>Side.white</code>, has <code>Type.none</code> and symbol '<code>-</code>' */
     public final static Piece none = new Piece(Side.none,Type.none);
@@ -42,24 +48,24 @@ public class Piece {
     /** The black knight piece. symbol '<code>k</code>'. */
     public final static Piece black_knight = new Piece(Side.black,Type.knight);
     /** The black tower piece. symbol '<code>t</code>'. */
-    public final static Piece black_tower = new Piece(Side.black,Type.tower);
+    public final static Piece black_rook = new Piece(Side.black,Type.rook);
     /** The black pawn piece. symbol '<code>p</code>'. */
     public final static Piece black_pawn = new Piece(Side.black,Type.pawn);
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="public final static <white pieces>" >
     /** The white King piece. symbol '<code>K</code>'. */
-    public final static Piece white_king = new Piece(Side.black,Type.king);
+    public final static Piece white_king = new Piece(Side.white,Type.king);
     /** The white Queen piece. symbol '<code>Q</code>'. */
-    public final static Piece white_queen = new Piece(Side.black,Type.queen);
+    public final static Piece white_queen = new Piece(Side.white,Type.queen);
     /** The white bishop piece. symbol '<code>i</code>'. */
-    public final static Piece white_bishop = new Piece(Side.black,Type.bishop);
+    public final static Piece white_bishop = new Piece(Side.white,Type.bishop);
     /** The white knight piece. symbol '<code>k</code>'. */
-    public final static Piece white_knight = new Piece(Side.black,Type.knight);
+    public final static Piece white_knight = new Piece(Side.white,Type.knight);
     /** The white tower piece. symbol '<code>t</code>'. */
-    public final static Piece white_tower = new Piece(Side.black,Type.tower);
+    public final static Piece white_rook = new Piece(Side.white,Type.rook);
     /** The white pawn piece. symbol '<code>p</code>'. */
-    public final static Piece white_pawn = new Piece(Side.black,Type.pawn);
+    public final static Piece white_pawn = new Piece(Side.white,Type.pawn);
     // </editor-fold>
 
     /** Creates any well-formed piece object. <code>symbol</code>s always correspond to the given type. */
@@ -70,12 +76,16 @@ public class Piece {
         this.type=type;
         switch(type)
         {
-            case none: this.symbol='-'; break;
-            case king: this.symbol='K'; break;
-            case queen: this.symbol='Q'; break;
-            case bishop: this.symbol='i'; break;
-            default:
-                this.symbol=type.name().charAt(0);break;
+            default: case none: this.symbol='-'; break;
+            case king: this.symbol='\u2654'; break;
+            case queen: this.symbol='\u2655'; break;
+            case bishop: this.symbol='\u2657'; break;
+            case knight: this.symbol='\u2658';break;
+            case rook: this.symbol='\u2656';break;
+            case pawn: this.symbol='\u2659';break;
+        }
+        if(side==Side.black){
+        symbol=(char)(symbol+6);
         }
     }
     

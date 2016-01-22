@@ -58,5 +58,6 @@ public class Position extends Button
     public void set_piece(Piece piece)
     {
         this.piece=piece;
+        this.setLabel(""+piece.toString());
     }
 }
