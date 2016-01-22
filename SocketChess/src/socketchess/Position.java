@@ -52,10 +52,20 @@ public class Position extends Button
         this(pos.charAt(0),(byte)(pos.charAt(1)-'0'));
     }
     
+    public char column()
+    {
+        return (char)(column+('A'-1));
+    }
+    
+    public int row()
+    {
+        return row;
+    }
+    
     @Override
     public String toString()
     {
-        return ""+(char)(column+('A'-1))+row;
+        return ""+column()+row();
     }
     
     public Piece get_piece()

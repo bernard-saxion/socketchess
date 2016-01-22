@@ -89,6 +89,26 @@ public class Piece {
         }
     }
     
+    public static Piece fromUnicode(final char symbol)
+    {
+        switch(symbol)
+        {
+            default: return Piece.none;
+            case '\u2654': return Piece.white_king;
+            case '\u2655': return Piece.white_queen;
+            case '\u2656': return Piece.white_bishop;
+            case '\u2657': return Piece.white_knight;
+            case '\u2658': return Piece.white_rook;
+            case '\u2659': return Piece.white_pawn;
+            case '\u265A': return Piece.black_king;
+            case '\u265B': return Piece.black_queen;
+            case '\u265C': return Piece.black_bishop;
+            case '\u265D': return Piece.black_knight;
+            case '\u265E': return Piece.black_rook;
+            case '\u2660': return Piece.black_pawn;
+        }
+    }
+    
     /**
      * Provides a nice image of what this piece looks like.
      * Images are up to 60 pixels long in either direction.
