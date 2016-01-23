@@ -136,7 +136,12 @@ public class Board implements ActionListener
 
         @Override
         public void actionPerformed(ActionEvent event){
+            Position selection;
             System.out.println("pressed "+event.getSource());
+            if(((Position)event.getSource()).get_piece()!=Piece.none){
+            selection=(Position)event.getSource();
+            System.out.println("selection= "+selection);
+            }
         }
         
         public void domove(final Move move) throws IllegalMoveException
