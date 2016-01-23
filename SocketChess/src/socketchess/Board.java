@@ -105,6 +105,40 @@ public class Board implements ActionListener
         public void actionPerformed(ActionEvent event){
             System.out.println("pressed "+event.getSource());
         }
+        
+        public void domove(final Move move) throws IllegalMoveException
+        {
+            if(null==move)throw new IllegalArgumentException("move was null");
+            Position from=position(move.from);
+            Position to=position(move.to);
+            if(from.get_piece()!=move.piece)throw new IllegalMoveException("No "+move.piece+" on "+from);
+            if(to.get_piece()!=move.capture)throw new IllegalMoveException(to.toString()+" has "+to.get_piece()+" not "+move.capture);
+            to.set_piece(move.piece);
+            from.set_piece(Piece.none);
+        }
+        
+        private Position position(final Position columnrow)
+        {
+            if(null==columnrow)throw new IllegalArgumentException("columnrow was null");
+            return position(columnrow.column(),columnrow.row());
+        }
+        
+        private Position position(final char column,final int row)
+        {
+            final int i,j;
+            if(Side.black==playingas)
+            {
+                i=(-row+9)-1;
+                j=column-1;
+            }
+            else
+            {
+                i=row-1;
+                j=(-column+9)-1;
+            }
+            return field[i][j];
+        }
+        
         /*
         public void paint(Graphics g,Applet applet){
         g.drawImage(Piece.white_tower.getImage(applet),40,40,80,80,applet);
