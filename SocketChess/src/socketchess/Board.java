@@ -5,10 +5,8 @@
  */
 package socketchess;
 
-import java.awt.*;
 import java.applet.*;
 import java.awt.event.*;
-import javax.swing.ImageIcon;
 
 
 /**
@@ -85,7 +83,7 @@ public class Board implements ActionListener
                                 
 			}
 		}
-                if(Side.black==playingas){
+                if(Side.white==playingas){
                     for(int i=0;i<=7;i+=7){
                     field[i][7].set_piece(Piece.white_rook);}
                     for(int j=1;j<=6;j+=5){
@@ -96,7 +94,42 @@ public class Board implements ActionListener
                     field[p][6].set_piece(Piece.white_pawn);}
                     field[3][7].set_piece(Piece.white_queen);
                     field[4][7].set_piece(Piece.white_king);
+                    
+                    for(int i=0;i<=7;i+=7){
+                    field[i][0].set_piece(Piece.black_rook);}
+                    for(int j=1;j<=6;j+=5){
+                    field[j][0].set_piece(Piece.black_knight);}
+                    for(int w=2;w<=5;w+=3){
+                    field[w][0].set_piece(Piece.black_bishop);}
+                    for(int p=0;p<=7;p+=1){
+                    field[p][1].set_piece(Piece.black_pawn);}
+                    field[3][0].set_piece(Piece.black_queen);
+                    field[4][0].set_piece(Piece.black_king);
                     }
+                else 
+                {
+                for(int i=0;i<=7;i+=7){
+                    field[i][0].set_piece(Piece.white_rook);}
+                    for(int j=1;j<=6;j+=5){
+                    field[j][0].set_piece(Piece.white_knight);}
+                    for(int w=2;w<=5;w+=3){
+                    field[w][0].set_piece(Piece.white_bishop);}
+                    for(int p=0;p<=7;p+=1){
+                    field[p][1].set_piece(Piece.white_pawn);}
+                    field[4][0].set_piece(Piece.white_queen);
+                    field[3][0].set_piece(Piece.white_king);
+                    
+                    for(int i=0;i<=7;i+=7){
+                    field[i][7].set_piece(Piece.black_rook);}
+                    for(int j=1;j<=6;j+=5){
+                    field[j][7].set_piece(Piece.black_knight);}
+                    for(int w=2;w<=5;w+=3){
+                    field[w][7].set_piece(Piece.black_bishop);}
+                    for(int p=0;p<=7;p+=1){
+                    field[p][6].set_piece(Piece.black_pawn);}
+                    field[4][7].set_piece(Piece.black_queen);
+                    field[3][7].set_piece(Piece.black_king);
+                }
                 
                 applet.repaint();
 	}

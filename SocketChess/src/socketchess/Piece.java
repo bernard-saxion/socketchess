@@ -32,7 +32,7 @@ public class Piece {
 
     @Override
     public String toString(){
-    return(side.toString().substring(0,1)+symbol);
+    return(""+symbol);
     }
     
     /** Explicitly not a chess piece. Alternative to <code>null</code>. neither on <code>Side.black</code> nor <code>Side.white</code>, has <code>Type.none</code> and symbol '<code>-</code>' */
