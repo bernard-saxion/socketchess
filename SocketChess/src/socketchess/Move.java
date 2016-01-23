@@ -31,7 +31,7 @@ public class Move
                         Piece.fromUnicode(s.substring(4,1).charAt(0)):
                         Piece.none
         );
-        if(s.charAt(0)!=piece.toString().charAt(0))throw new IllegalMoveException("There is no "+piece.type+" at "+from);
+        if(s.charAt(0)!=piece.toString().charAt(0))throw new IllegalMoveException("There is no "+piece.type+" at "+from+",but"+piece.toString());
     }
     
     public Move(final Piece piece, final Position from, final Position to) throws IllegalMoveException

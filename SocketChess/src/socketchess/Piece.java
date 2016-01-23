@@ -76,7 +76,7 @@ public class Piece {
         this.type=type;
         switch(type)
         {
-            default: case none: this.symbol='-'; break;
+            default: case none: this.symbol=' '; break;
             case king: this.symbol='\u2654'; break;
             case queen: this.symbol='\u2655'; break;
             case bishop: this.symbol='\u2657'; break;
