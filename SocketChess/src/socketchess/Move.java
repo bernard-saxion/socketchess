@@ -46,6 +46,13 @@ public class Move
         this.from=from;
         this.to=to;
         
+        if(piece.type==Piece.Type.king)
+        {
+            if(from.column() -
+             to.column()
+                    >1) throw new IllegalMoveException("king can't move that far");
+        }
+        
         this.capture=capture;
         if(this.piece.side==this.capture.side) throw new IllegalMoveException("Cannot capture own pieces");
     }
