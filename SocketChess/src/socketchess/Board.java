@@ -31,12 +31,14 @@ public class Board implements ActionListener
 */
 	final static int butsize=80;
         final Side playingas;
+        final Opponent opponent;
 
-        public Board(final Side playas)
+        public Board(final Side playas, final Opponent opponent)
         {
             this.playingas=playas;
+            this.opponent=opponent;
         }
-        
+
 	public void init(final Applet applet)
 	{
                 applet.removeAll();
