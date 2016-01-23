@@ -15,6 +15,7 @@ import java.awt.event.*;
  */
 public class Board implements ActionListener
 {
+        Position selection=null,drop=null;
 	Position field[][]=new Position[8][8];
         /*Image white_pawn;
         Image white_knight;
@@ -138,12 +139,54 @@ public class Board implements ActionListener
 
         @Override
         public void actionPerformed(ActionEvent event){
-            Position selection;
             System.out.println("pressed "+event.getSource());
-            if(((Position)event.getSource()).get_piece()!=Piece.none){
-            selection=(Position)event.getSource();
-            System.out.println("selection= "+selection);
+            if(Side.white==playingas){
+                //If u are playig whit whites, prechoose one of you white pieces
+                if(drop==null&&((Position)event.getSource()).get_piece()!=Piece.none&&((Position)event.getSource()).get_piece()!=Piece.black_pawn&&((Position)event.getSource()).get_piece()!=Piece.black_rook&&((Position)event.getSource()).get_piece()!=Piece.black_knight&&((Position)event.getSource()).get_piece()!=Piece.black_bishop&&((Position)event.getSource()).get_piece()!=Piece.black_queen&&((Position)event.getSource()).get_piece()!=Piece.black_king){
+                    selection=(Position)event.getSource();
+                    System.out.println("selection= "+selection);
+                }
+                //if u have a prechoose piece, choos the site than u want to drop it
+                if(selection!=null&&drop==null&&(((Position)event.getSource()).get_piece()==Piece.none||((Position)event.getSource()).get_piece()==Piece.black_pawn||((Position)event.getSource()).get_piece()==Piece.black_rook||((Position)event.getSource()).get_piece()==Piece.black_knight||((Position)event.getSource()).get_piece()==Piece.black_bishop||((Position)event.getSource()).get_piece()==Piece.black_queen||((Position)event.getSource()).get_piece()==Piece.black_king)){
+                   drop=(Position)event.getSource();
+                    System.out.println("drop= "+drop);
+                    try
+                    {
+                    domove(new Move(selection.get_piece(), selection, drop,drop.get_piece()));
+                    drop=null;
+                    selection=null;
+                    }
+                    catch(IllegalMoveException ime)
+                    { 
+                        System.out.println("illegal move: "+ime.getMessage());
+                    drop=null;
+                    selection=null;
+                }
+                }
             }
+            else{
+                if(drop==null&&((Position)event.getSource()).get_piece()!=Piece.none&&((Position)event.getSource()).get_piece()!=Piece.white_pawn&&((Position)event.getSource()).get_piece()!=Piece.white_rook&&((Position)event.getSource()).get_piece()!=Piece.white_knight&&((Position)event.getSource()).get_piece()!=Piece.white_bishop&&((Position)event.getSource()).get_piece()!=Piece.white_queen&&((Position)event.getSource()).get_piece()!=Piece.white_king){
+                    selection=(Position)event.getSource();
+                    System.out.println("selection= "+selection);
+                }
+                if(selection!=null&&drop==null&&(((Position)event.getSource()).get_piece()==Piece.none||((Position)event.getSource()).get_piece()==Piece.white_pawn||((Position)event.getSource()).get_piece()==Piece.white_rook||((Position)event.getSource()).get_piece()==Piece.white_knight||((Position)event.getSource()).get_piece()==Piece.white_bishop||((Position)event.getSource()).get_piece()==Piece.white_queen||((Position)event.getSource()).get_piece()==Piece.white_king)){
+                    drop=(Position)event.getSource();
+                    System.out.println("drop= "+drop);
+                    try
+                    {
+                    domove(new Move(selection.get_piece(), selection, drop, drop.get_piece()));
+                    drop=null;
+                    selection=null;
+                    }
+                    catch(IllegalMoveException ime)
+                    { 
+                        System.out.println("illegal move: "+ime.getMessage());
+                    drop=null;
+                    selection=null;
+                    }
+                }
+        }
+        
         }
         
         public void domove(final Move move) throws IllegalMoveException
@@ -153,6 +196,9 @@ public class Board implements ActionListener
             Position to=position(move.to);
             if(from.get_piece()!=move.piece)throw new IllegalMoveException("No "+move.piece+" on "+from);
             if(to.get_piece()!=move.capture)throw new IllegalMoveException(to.toString()+" has "+to.get_piece()+" not "+move.capture);
+               
+            
+            System.out.println("moving piece");
             to.set_piece(move.piece);
             from.set_piece(Piece.none);
         }
@@ -168,15 +214,15 @@ public class Board implements ActionListener
             final int i,j;
             if(Side.black==playingas)
             {
-                i=(-row+9)-1;
-                j=column-1;
+             i=row-1;
+             j=-(column-'A')+7;
             }
             else
             {
-                i=row-1;
-                j=(-column+9)-1;
+                i=(-row+9)-1;
+                j=(column-'A');
             }
-            return field[i][j];
+            return field[j][i];
         }
         
         /*
