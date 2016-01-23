@@ -3,20 +3,15 @@ package socketchess;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  *
  * @author saxion
  */
-public class Opponent {
-    
-    public enum On
-    {
-        server,
-        client,
-    }
-    
+public class Opponent
+{    
     final Side side;
     
     final DataInputStream i;
@@ -28,12 +23,15 @@ public class Opponent {
         this.i=new DataInputStream(socket.getInputStream());
         this.o=new DataOutputStream(socket.getOutputStream());
     }
-    
-    public Opponent(final On connection, final Socket socket) throws IOException
+
+    public Opponent(Side side, ServerSocket server) throws IOException
     {
-        this((On.server==connection?Side.black:Side.white),socket);
+        this.side=side;
+        final Socket sock=server.accept();
+        this.i=new DataInputStream(sock.getInputStream());
+        this.o=new DataOutputStream(sock.getOutputStream());
     }
-    
+        
     public boolean sendMove(final Move move) throws IllegalMoveException, IOException
     {
         String response="";

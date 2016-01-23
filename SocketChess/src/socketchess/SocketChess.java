@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -33,7 +34,8 @@ public class SocketChess extends Applet implements ActionListener
     private final TextField addressf = new TextField();
     private final TextField portf = new TextField();
     
-    private final Label notice = new Label("");
+    private final Label notice = new Label("                                " +
+            "                                                               ");
     /**
      * Initialization method that will be called after the applet is loaded into
      * the browser.
@@ -61,30 +63,42 @@ public class SocketChess extends Applet implements ActionListener
     @Override
     public void actionPerformed(ActionEvent ae)
     {
-        try(final Socket socket=new Socket(addressf.getText(),Short.parseShort(portf.getText())))
+        if(ae.getSource()==asclient)
         {
-            if(ae.getSource()==asclient)
+            try(final Socket socket=new Socket(addressf.getText(),Short.parseShort(portf.getText())))
             {
                 board=new Board(Side.white, new Opponent(Side.black, socket));
                 board.init(this);
             }
-            if(ae.getSource()==asserver)
+            catch(final NumberFormatException nfe)
             {
+                notice.setText("Port must be a number (1025-65535), choose the same number that the server chose.");
+            }
+            catch(final UnknownHostException uhe)
+            {
+                notice.setText("Don't know how to reach \""+addressf.getText()+"\"");
+            }
+            catch(final IOException ioe)
+            {
+                notice.setText("\""+addressf.getText()+"\" broke off the connection");
+            }
+        }
+        if(ae.getSource()==asserver)
+        {
+            try(final ServerSocket socket=new ServerSocket(Short.parseShort(portf.getText())))
+            {
+                notice.setText("Waiting for opponent to connect");
                 board=new Board(Side.black, new Opponent(Side.white, socket));
                 board.init(this);
             }
-        }
-        catch(final NumberFormatException nfe)
-        {
-            notice.setText("Port must be a number (0-65535), choose the same number that the server chose");
-        }
-        catch(final UnknownHostException uhe)
-        {
-            notice.setText("Don't know how to reach \""+addressf.getText()+"\"");
-        }
-        catch(final IOException ioe)
-        {
-            notice.setText("\""+addressf.getText()+"\" broke off the connection");
+            catch(final NumberFormatException nfe)
+            {
+                notice.setText("Port must be a number (1025-65535), give this number to your opponent.");
+            }
+            catch(final IOException ioe)
+            {
+                notice.setText("Connection dropped");
+            }
         }
     }
 }
