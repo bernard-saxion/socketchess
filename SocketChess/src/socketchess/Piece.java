@@ -69,7 +69,7 @@ public class Piece {
             case '\u2655': return Piece.white_queen;
             case '\u2656': return Piece.white_bishop;
             case '\u2657': return Piece.white_knight;
-            case '\u2658': return Piece.white_rook;
+            case '\u2658': return new Piece(/*...*/);
             case '\u2659': return Piece.white_pawn;
             case '\u265A': return Piece.black_king;
             case '\u265B': return Piece.black_queen;
