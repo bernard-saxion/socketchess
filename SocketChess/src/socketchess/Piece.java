@@ -38,38 +38,9 @@ public class Piece {
     /** Explicitly not a chess piece. Alternative to <code>null</code>. neither on <code>Side.black</code> nor <code>Side.white</code>, has <code>Type.none</code> and symbol '<code>-</code>' */
     public final static Piece none = new Piece(Side.none,Type.none);
 
-    // <editor-fold defaultstate="collapsed" desc="public final static <black pieces>" >
-    /** The black King piece. symbol '<code>K</code>'. */
-    public final static Piece black_king = new Piece(Side.black,Type.king);
-    /** The black Queen piece. symbol '<code>Q</code>'. */
-    public final static Piece black_queen = new Piece(Side.black,Type.queen);
-    /** The black bishop piece. symbol '<code>i</code>'. */
-    public final static Piece black_bishop = new Piece(Side.black,Type.bishop);
-    /** The black knight piece. symbol '<code>k</code>'. */
-    public final static Piece black_knight = new Piece(Side.black,Type.knight);
-    /** The black tower piece. symbol '<code>t</code>'. */
-    public final static Piece black_rook = new Piece(Side.black,Type.rook);
-    /** The black pawn piece. symbol '<code>p</code>'. */
-    public final static Piece black_pawn = new Piece(Side.black,Type.pawn);
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="public final static <white pieces>" >
-    /** The white King piece. symbol '<code>K</code>'. */
-    public final static Piece white_king = new Piece(Side.white,Type.king);
-    /** The white Queen piece. symbol '<code>Q</code>'. */
-    public final static Piece white_queen = new Piece(Side.white,Type.queen);
-    /** The white bishop piece. symbol '<code>i</code>'. */
-    public final static Piece white_bishop = new Piece(Side.white,Type.bishop);
-    /** The white knight piece. symbol '<code>k</code>'. */
-    public final static Piece white_knight = new Piece(Side.white,Type.knight);
-    /** The white tower piece. symbol '<code>t</code>'. */
-    public final static Piece white_rook = new Piece(Side.white,Type.rook);
-    /** The white pawn piece. symbol '<code>p</code>'. */
-    public final static Piece white_pawn = new Piece(Side.white,Type.pawn);
-    // </editor-fold>
 
     /** Creates any well-formed piece object. <code>symbol</code>s always correspond to the given type. */
-    private Piece(final Side side, final Type type)
+    public Piece(final Side side, final Type type)
     {
         if(Side.none==side^Type.none==type) throw new IllegalArgumentException("Cannot mix NONE values with other values");
         this.side=side;

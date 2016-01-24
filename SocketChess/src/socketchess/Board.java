@@ -7,6 +7,7 @@ package socketchess;
 
 import java.applet.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 
 /**
@@ -17,19 +18,9 @@ public class Board implements ActionListener
 {
         Position selection=null,drop=null;
 	Position field[][]=new Position[8][8];
-        /*Image white_pawn;
-        Image white_knight;
-        Image white_bishop;
-        Image white_tower;
-        Image white_queen;
-        Image white_king;
-        Image black_pawn;
-        Image black_knight;
-        Image black_bishop;
-        Image black_tower;
-        Image black_queen;
-        Image black_king;
-*/
+        
+        private boolean myturn;
+        
 	final static int butsize=80;
         final Side playingas;
         final Opponent opponent;
@@ -44,20 +35,7 @@ public class Board implements ActionListener
 	{
                 applet.removeAll();
 		applet.setLayout(null);
-                /*
-                white_pawn=applet.getImage(applet.getDocumentBase(),"white_pawn.png");
-                white_knight=applet.getImage(applet.getDocumentBase(),"white_knight.png");
-                white_bishop=applet.getImage(applet.getDocumentBase(),"white_bishop.png");
-                white_tower=applet.getImage(applet.getDocumentBase(),"white_tower.png");
-                white_queen=applet.getImage(applet.getDocumentBase(),"white_queen.png");
-                white_king=applet.getImage(applet.getDocumentBase(),"white_king.png");
-                black_pawn=applet.getImage(applet.getDocumentBase(),"black_pawn.png");
-                black_knight=applet.getImage(applet.getDocumentBase(),"black_knight.png");
-                black_bishop=applet.getImage(applet.getDocumentBase(),"black_bishop.png");
-                black_tower=applet.getImage(applet.getDocumentBase(),"black_tower.png");
-                black_queen=applet.getImage(applet.getDocumentBase(),"black_queen.png");
-                black_king=applet.getImage(applet.getDocumentBase(),"black_king.png");
-*/
+                
 		for(int i=7;i>=0;i--)
 		{
 			for(int j=7;j>=0;j--)
@@ -88,7 +66,7 @@ public class Board implements ActionListener
 		}
                 if(Side.white==playingas){
                     for(int i=0;i<=7;i+=7){
-                    field[i][7].set_piece(Piece.white_rook);}
+                    field[i][7].set_piece(new Piece(Side.white, Piece.Type.rook));}
                     for(int j=1;j<=6;j+=5){
                     field[j][7].set_piece(Piece.white_knight);}
                     for(int w=2;w<=5;w+=3){
@@ -142,7 +120,12 @@ public class Board implements ActionListener
             System.out.println("pressed "+event.getSource());
             if(Side.white==playingas){
                 //If u are playig whit whites, prechoose one of you white pieces
-                if(drop==null&&((Position)event.getSource()).get_piece()!=Piece.none&&((Position)event.getSource()).get_piece()!=Piece.black_pawn&&((Position)event.getSource()).get_piece()!=Piece.black_rook&&((Position)event.getSource()).get_piece()!=Piece.black_knight&&((Position)event.getSource()).get_piece()!=Piece.black_bishop&&((Position)event.getSource()).get_piece()!=Piece.black_queen&&((Position)event.getSource()).get_piece()!=Piece.black_king){
+                if( drop==null &&
+                        ((Position)event.getSource()).get_piece()!=Piece.none&&
+                        ((Position)event.getSource()).get_piece()!=Piece.black_pawn&&
+                        (((Position)event.getSource()).get_piece().side==Side.black && ((Position)event.getSource()).get_piece().type==Piece.Type.rook) &&
+                        ((Position)event.getSource()).get_piece()!=Piece.black_knight&&
+                        ((Position)event.getSource()).get_piece()!=Piece.black_bishop&&((Position)event.getSource()).get_piece()!=Piece.black_queen&&((Position)event.getSource()).get_piece()!=Piece.black_king){
                     selection=(Position)event.getSource();
                     System.out.println("selection= "+selection);
                 }
@@ -201,7 +184,7 @@ public class Board implements ActionListener
             System.out.println("moving piece");
             to.set_piece(move.piece);
             from.set_piece(Piece.none);
-        }
+            }
         
         private Position position(final Position columnrow)
         {
@@ -224,13 +207,4 @@ public class Board implements ActionListener
             }
             return field[j][i];
         }
-        
-        /*
-        public void paint(Graphics g,Applet applet){
-        g.drawImage(Piece.white_tower.getImage(applet),40,40,80,80,applet);
-        System.out.println("piece "+Piece.white_tower);
-        }
-*/
 }
-
-// put  png inside the board and actionlistener for butons
