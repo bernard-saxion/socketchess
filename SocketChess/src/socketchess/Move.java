@@ -62,6 +62,24 @@ public class Move
         to.row())
                     >1) throw new IllegalMoveException("rook can't move that far to the sides");
         }
+        //movement for the pawn
+        if(piece.type==Piece.Type.pawn)
+        {
+            if(piece.hasMoved()!=false)
+                if(from.column() - to.column()!=0)
+                    throw new IllegalMoveException("pawn can't move to the side");
+            
+            if(piece.hasMoved()==false){
+                if(Math.abs(from.row() - to.row())>=3)
+                    throw new IllegalMoveException("pawn can't move that far");
+            } 
+            else{
+                System.out.println("this pawn has moved in the past.");
+            if(from.row() - to.row()!=-1)
+              throw new IllegalMoveException("hasmoved pawn can't move 2 spaces");
+            }
+        }
+        
         
         this.capture=capture;
         if(this.piece.side==this.capture.side) throw new IllegalMoveException("Cannot capture own pieces");
