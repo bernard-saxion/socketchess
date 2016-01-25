@@ -46,11 +46,21 @@ public class Move
         this.from=from;
         this.to=to;
         
+        //movement for the king
         if(piece.type==Piece.Type.king)
         {
-            if(from.column() -
-             to.column()
-                    >1) throw new IllegalMoveException("king can't move that far");
+            if(Math.abs(from.column() -
+             to.column())
+                    >1) throw new IllegalMoveException("king can't move that far to the sides");
+            if(Math.abs(from.row() -
+             to.row())
+                    >1) throw new IllegalMoveException("king can't move that far up or down");
+        }
+        //movement for the rook
+        if(piece.type==Piece.Type.rook){
+        if(Math.abs(from.column() -
+        to.row())
+                    >1) throw new IllegalMoveException("rook can't move that far to the sides");
         }
         
         this.capture=capture;

@@ -65,18 +65,18 @@ public class Piece {
         switch(symbol)
         {
             default: return Piece.none;
-            case '\u2654': return Piece.white_king;
-            case '\u2655': return Piece.white_queen;
-            case '\u2656': return Piece.white_bishop;
-            case '\u2657': return Piece.white_knight;
-            case '\u2658': return new Piece(/*...*/);
-            case '\u2659': return Piece.white_pawn;
-            case '\u265A': return Piece.black_king;
-            case '\u265B': return Piece.black_queen;
-            case '\u265C': return Piece.black_bishop;
-            case '\u265D': return Piece.black_knight;
-            case '\u265E': return Piece.black_rook;
-            case '\u2660': return Piece.black_pawn;
+            case '\u2654': return new Piece(Side.white, Piece.Type.king);
+            case '\u2655': return new Piece(Side.white, Piece.Type.queen);
+            case '\u2656': return new Piece(Side.white, Piece.Type.bishop);
+            case '\u2657': return new Piece(Side.white, Piece.Type.knight);
+            case '\u2658': return new Piece(Side.white, Piece.Type.rook);
+            case '\u2659': return new Piece(Side.white, Piece.Type.pawn);
+            case '\u265A': return new Piece(Side.black, Piece.Type.king);
+            case '\u265B': return new Piece(Side.black, Piece.Type.queen);
+            case '\u265C': return new Piece(Side.black, Piece.Type.bishop);
+            case '\u265D': return new Piece(Side.black, Piece.Type.knight);
+            case '\u265E': return new Piece(Side.black, Piece.Type.rook);
+            case '\u2660': return new Piece(Side.black, Piece.Type.pawn);
         }
     }
     

@@ -68,71 +68,87 @@ public class Board implements ActionListener
                     for(int i=0;i<=7;i+=7){
                     field[i][7].set_piece(new Piece(Side.white, Piece.Type.rook));}
                     for(int j=1;j<=6;j+=5){
-                    field[j][7].set_piece(Piece.white_knight);}
+                    field[j][7].set_piece(new Piece(Side.white, Piece.Type.knight));}
                     for(int w=2;w<=5;w+=3){
-                    field[w][7].set_piece(Piece.white_bishop);}
+                    field[w][7].set_piece(new Piece(Side.white, Piece.Type.bishop));}
                     for(int p=0;p<=7;p+=1){
-                    field[p][6].set_piece(Piece.white_pawn);}
-                    field[3][7].set_piece(Piece.white_queen);
-                    field[4][7].set_piece(Piece.white_king);
+                    field[p][6].set_piece(new Piece(Side.white, Piece.Type.pawn));}
+                    field[3][7].set_piece(new Piece(Side.white, Piece.Type.queen));
+                    field[4][7].set_piece(new Piece(Side.white, Piece.Type.king));
                     
                     for(int i=0;i<=7;i+=7){
-                    field[i][0].set_piece(Piece.black_rook);}
+                    field[i][0].set_piece(new Piece(Side.black, Piece.Type.rook));}
                     for(int j=1;j<=6;j+=5){
-                    field[j][0].set_piece(Piece.black_knight);}
+                    field[j][0].set_piece(new Piece(Side.black, Piece.Type.knight));}
                     for(int w=2;w<=5;w+=3){
-                    field[w][0].set_piece(Piece.black_bishop);}
+                    field[w][0].set_piece(new Piece(Side.black, Piece.Type.bishop));}
                     for(int p=0;p<=7;p+=1){
-                    field[p][1].set_piece(Piece.black_pawn);}
-                    field[3][0].set_piece(Piece.black_queen);
-                    field[4][0].set_piece(Piece.black_king);
+                    field[p][1].set_piece(new Piece(Side.black, Piece.Type.pawn));}
+                    field[3][0].set_piece(new Piece(Side.black, Piece.Type.queen));
+                    field[4][0].set_piece(new Piece(Side.black, Piece.Type.king));
                     }
                 else 
                 {
                 for(int i=0;i<=7;i+=7){
-                    field[i][0].set_piece(Piece.white_rook);}
+                    field[i][0].set_piece(new Piece(Side.white, Piece.Type.rook));}
                     for(int j=1;j<=6;j+=5){
-                    field[j][0].set_piece(Piece.white_knight);}
+                    field[j][0].set_piece(new Piece(Side.white, Piece.Type.knight));}
                     for(int w=2;w<=5;w+=3){
-                    field[w][0].set_piece(Piece.white_bishop);}
+                    field[w][0].set_piece(new Piece(Side.white, Piece.Type.bishop));}
                     for(int p=0;p<=7;p+=1){
-                    field[p][1].set_piece(Piece.white_pawn);}
-                    field[4][0].set_piece(Piece.white_queen);
-                    field[3][0].set_piece(Piece.white_king);
+                    field[p][1].set_piece(new Piece(Side.white, Piece.Type.pawn));}
+                    field[3][0].set_piece(new Piece(Side.white, Piece.Type.queen));
+                    field[4][0].set_piece(new Piece(Side.white, Piece.Type.king));
                     
                     for(int i=0;i<=7;i+=7){
-                    field[i][7].set_piece(Piece.black_rook);}
+                    field[i][7].set_piece(new Piece(Side.black, Piece.Type.rook));}
                     for(int j=1;j<=6;j+=5){
-                    field[j][7].set_piece(Piece.black_knight);}
+                    field[j][7].set_piece(new Piece(Side.black, Piece.Type.knight));}
                     for(int w=2;w<=5;w+=3){
-                    field[w][7].set_piece(Piece.black_bishop);}
-                    for(int p=0;p<=7;p+=1){
-                    field[p][6].set_piece(Piece.black_pawn);}
-                    field[4][7].set_piece(Piece.black_queen);
-                    field[3][7].set_piece(Piece.black_king);
+                    field[w][7].set_piece(new Piece(Side.black, Piece.Type.bishop));}
+                    for(int y=0;y<=7;y+=1){
+                    field[y][6].set_piece(new Piece(Side.black, Piece.Type.pawn));}
+                    field[4][7].set_piece(new Piece(Side.black, Piece.Type.queen));
+                    field[3][7].set_piece(new Piece(Side.black, Piece.Type.king));
                 }
-                
-                applet.repaint();
-	}
+                	}
+        
 
         @Override
         public void actionPerformed(ActionEvent event){
             System.out.println("pressed "+event.getSource());
+            Piece pressedpiece=((Position)event.getSource()).get_piece();
+            
+           //if u are whites
             if(Side.white==playingas){
                 //If u are playig whit whites, prechoose one of you white pieces
                 if( drop==null &&
-                        ((Position)event.getSource()).get_piece()!=Piece.none&&
-                        ((Position)event.getSource()).get_piece()!=Piece.black_pawn&&
-                        (((Position)event.getSource()).get_piece().side==Side.black && ((Position)event.getSource()).get_piece().type==Piece.Type.rook) &&
-                        ((Position)event.getSource()).get_piece()!=Piece.black_knight&&
-                        ((Position)event.getSource()).get_piece()!=Piece.black_bishop&&((Position)event.getSource()).get_piece()!=Piece.black_queen&&((Position)event.getSource()).get_piece()!=Piece.black_king){
-                    selection=(Position)event.getSource();
-                    System.out.println("selection= "+selection);
+                        pressedpiece!=Piece.none&&
+                        (pressedpiece.side==Side.white) && 
+                        (pressedpiece.type==Piece.Type.pawn||
+                        pressedpiece.type==Piece.Type.rook||
+                        pressedpiece.type==Piece.Type.knight||
+                        pressedpiece.type==Piece.Type.bishop||
+                        pressedpiece.type==Piece.Type.queen||
+                        pressedpiece.type==Piece.Type.king)){
+                    
+                            selection=(Position)event.getSource();
+                            System.out.println("selection= "+selection);
                 }
                 //if u have a prechoose piece, choos the site than u want to drop it
-                if(selection!=null&&drop==null&&(((Position)event.getSource()).get_piece()==Piece.none||((Position)event.getSource()).get_piece()==Piece.black_pawn||((Position)event.getSource()).get_piece()==Piece.black_rook||((Position)event.getSource()).get_piece()==Piece.black_knight||((Position)event.getSource()).get_piece()==Piece.black_bishop||((Position)event.getSource()).get_piece()==Piece.black_queen||((Position)event.getSource()).get_piece()==Piece.black_king)){
-                   drop=(Position)event.getSource();
-                    System.out.println("drop= "+drop);
+                if(selection!=null&&
+                        drop==null&&
+                        (pressedpiece==Piece.none||
+                        (pressedpiece.side==Side.black) && 
+                        (pressedpiece.type==Piece.Type.pawn||
+                        pressedpiece.type==Piece.Type.rook||
+                        pressedpiece.type==Piece.Type.knight||
+                        pressedpiece.type==Piece.Type.bishop||
+                        pressedpiece.type==Piece.Type.queen||
+                        pressedpiece.type==Piece.Type.king))){
+                    
+                            drop=(Position)event.getSource();
+                            System.out.println("drop= "+drop);
                     try
                     {
                     domove(new Move(selection.get_piece(), selection, drop,drop.get_piece()));
@@ -147,14 +163,34 @@ public class Board implements ActionListener
                 }
                 }
             }
+            //if u are blaks
             else{
-                if(drop==null&&((Position)event.getSource()).get_piece()!=Piece.none&&((Position)event.getSource()).get_piece()!=Piece.white_pawn&&((Position)event.getSource()).get_piece()!=Piece.white_rook&&((Position)event.getSource()).get_piece()!=Piece.white_knight&&((Position)event.getSource()).get_piece()!=Piece.white_bishop&&((Position)event.getSource()).get_piece()!=Piece.white_queen&&((Position)event.getSource()).get_piece()!=Piece.white_king){
-                    selection=(Position)event.getSource();
-                    System.out.println("selection= "+selection);
+                if(drop==null &&
+                        pressedpiece!=Piece.none&&
+                        (pressedpiece.side==Side.black) && 
+                        (pressedpiece.type==Piece.Type.pawn||
+                        pressedpiece.type==Piece.Type.rook||
+                        pressedpiece.type==Piece.Type.knight||
+                        pressedpiece.type==Piece.Type.bishop||
+                        pressedpiece.type==Piece.Type.queen||
+                        pressedpiece.type==Piece.Type.king)){
+                    
+                            selection=(Position)event.getSource();
+                            System.out.println("selection= "+selection);
                 }
-                if(selection!=null&&drop==null&&(((Position)event.getSource()).get_piece()==Piece.none||((Position)event.getSource()).get_piece()==Piece.white_pawn||((Position)event.getSource()).get_piece()==Piece.white_rook||((Position)event.getSource()).get_piece()==Piece.white_knight||((Position)event.getSource()).get_piece()==Piece.white_bishop||((Position)event.getSource()).get_piece()==Piece.white_queen||((Position)event.getSource()).get_piece()==Piece.white_king)){
-                    drop=(Position)event.getSource();
-                    System.out.println("drop= "+drop);
+                if(selection!=null&&
+                        drop==null&&
+                        (pressedpiece==Piece.none||
+                        (pressedpiece.side==Side.white) && 
+                        (pressedpiece.type==Piece.Type.pawn||
+                        pressedpiece.type==Piece.Type.rook||
+                        pressedpiece.type==Piece.Type.knight||
+                        pressedpiece.type==Piece.Type.bishop||
+                        pressedpiece.type==Piece.Type.queen||
+                        pressedpiece.type==Piece.Type.king))){
+                    
+                            drop=(Position)event.getSource();
+                            System.out.println("drop= "+drop);
                     try
                     {
                     domove(new Move(selection.get_piece(), selection, drop, drop.get_piece()));

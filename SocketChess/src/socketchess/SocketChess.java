@@ -65,6 +65,11 @@ public class SocketChess extends Applet implements ActionListener
     {
         if(ae.getSource()==asclient)
         {
+            if(true) 
+            { 
+                board=new Board(Side.white, null); 
+                board.init(this); 
+            }else 
             try(final Socket socket=new Socket(addressf.getText(),Short.parseShort(portf.getText())))
             {
                 board=new Board(Side.white, new Opponent(Side.black, socket));
@@ -88,7 +93,7 @@ public class SocketChess extends Applet implements ActionListener
             try(final ServerSocket socket=new ServerSocket(Short.parseShort(portf.getText())))
             {
                 notice.setText("Waiting for opponent to connect");
-                board=new Board(Side.black, new Opponent(Side.white, socket));
+                board=new Board(Side.black, null); 
                 board.init(this);
             }
             catch(final NumberFormatException nfe)
