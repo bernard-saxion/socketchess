@@ -30,6 +30,16 @@ public class Piece {
         
     private char symbol;
 
+    private boolean hasmoved=false;
+    public boolean hasMoved()
+    {
+        return hasmoved;
+    }
+    public  void moved()
+    {
+        hasmoved = true;
+    } 
+    
     @Override
     public String toString(){
     return(""+symbol);

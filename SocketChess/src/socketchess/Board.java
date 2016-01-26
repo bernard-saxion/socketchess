@@ -277,6 +277,7 @@ public class Board implements ActionListener
             System.out.println("moving piece");
             to.set_piece(move.piece);
             from.set_piece(Piece.none);
+            move.piece.moved();
         }
         
         private Position position(final Position columnrow)
