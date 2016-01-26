@@ -106,15 +106,15 @@ public class Piece {
             default: return Piece.none;
             case '\u2654': return Piece.white_king;
             case '\u2655': return Piece.white_queen;
-            case '\u2656': return Piece.white_bishop;
-            case '\u2657': return Piece.white_knight;
-            case '\u2658': return Piece.white_rook;
+            case '\u2656': return Piece.white_rook;
+            case '\u2657': return Piece.white_bishop;
+            case '\u2658': return Piece.white_knight;
             case '\u2659': return Piece.white_pawn;
             case '\u265A': return Piece.black_king;
             case '\u265B': return Piece.black_queen;
-            case '\u265C': return Piece.black_bishop;
-            case '\u265D': return Piece.black_knight;
-            case '\u265E': return Piece.black_rook;
+            case '\u265C': return Piece.black_rook;
+            case '\u265D': return Piece.black_bishop;
+            case '\u265E': return Piece.black_knight;
             case '\u265F': return Piece.black_pawn;
         }
     }
