@@ -30,6 +30,16 @@ public class Piece {
         
     private char symbol;
 
+    private boolean hasmoved=false;
+    public boolean hasMoved()
+    {
+        return hasmoved;
+    }
+    public  void moved()
+    {
+        hasmoved = true;
+    } 
+    
     @Override
     public String toString(){
     return(""+symbol);
@@ -76,7 +86,7 @@ public class Piece {
             case '\u265C': return new Piece(Side.black, Piece.Type.bishop);
             case '\u265D': return new Piece(Side.black, Piece.Type.knight);
             case '\u265E': return new Piece(Side.black, Piece.Type.rook);
-            case '\u2660': return new Piece(Side.black, Piece.Type.pawn);
+            case '\u266F': return new Piece(Side.black, Piece.Type.pawn);
         }
     }
     

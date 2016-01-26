@@ -57,20 +57,48 @@ public class Move
                     >1) throw new IllegalMoveException("king can't move that far up or down");
         }
         //movement for the rook
-        if(piece.type==Piece.Type.rook){
-        if(Math.abs(from.column() -
-        to.row())
-                    >1) throw new IllegalMoveException("rook can't move that far to the sides");
-        }
-        //movement for the pawn
-        if(piece.type==Piece.Type.pawn)
+        if(piece.type==Piece.Type.rook)
+            if(from.row() != to.row() && from.column() != to.column())
+                    throw new IllegalMoveException("rook can't move diagonal");
+        //movement for the bishop
+        if(piece.type==Piece.Type.bishop)
+            if(Math.abs(from.row()-to.row()) != Math.abs(from.column()-to.column()))
+                    throw new IllegalMoveException("bishop can't move in this way");
+        //movement for the queen
+        if(piece.type==Piece.Type.queen)
+            if(from.row() != to.row() && from.column() != to.column()){
+            }else if(Math.abs(from.row()-to.row()) == Math.abs(from.column()-to.column())){
+            }else{
+            throw new IllegalMoveException("queen can't move in this way");}
+        //movement for the knight
+        if(piece.type==Piece.Type.knight)
+            if (to.row() == (from.row() - 2) && to.column() == (from.column() - 1)) //2N, 1E
         {
-            if(piece.hasMoved()!=false)
+        } else if (to.row() == (from.row() - 2) && to.column() == (from.column() + 1)) //2N, 1W
+        {
+        } else if (to.row() == (from.row() + 2) && to.column() == (from.column() - 1)) //2S, 1E
+        {
+        } else if (to.row() == (from.row() + 2) && to.column() == (from.column() + 1)) //2S, 1W
+        {
+        } else if (to.row() == (from.row() - 1) && to.column() == (from.column() - 2)) //1N, 2E
+        {
+        } else if (to.row() == (from.row() - 1) && to.column() == (from.column() + 2)) //1N, 2W
+        {
+        } else if (to.row() == (from.row() + 1) && to.column() == (from.column() - 2)) //1S, 2E
+        {
+        } else if (to.row() == (from.row()+ 1) && to.column() == (from.column() + 2)) //1S, 2W
+        {
+        }else{
+            throw new IllegalMoveException("knight can't move in this way");    
+    }
+        
+        //movement for the pawn
+        /*if(piece.type==Piece.Type.pawn)
+        {
                 if(from.column() - to.column()!=0)
                     throw new IllegalMoveException("pawn can't move to the side");
             
-            if(piece.hasMoved()==false){
-                if(Math.abs(from.row() - to.row())>=3)
+            if((piece.hasMoved()==false)&&(Math.abs(from.row() - to.row())!=2)){
                     throw new IllegalMoveException("pawn can't move that far");
             } 
             else{
@@ -79,6 +107,9 @@ public class Move
               throw new IllegalMoveException("hasmoved pawn can't move 2 spaces");
             }
         }
+        */
+        
+    
         
         
         this.capture=capture;
