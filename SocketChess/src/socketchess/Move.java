@@ -21,16 +21,17 @@ public class Move
     public Move(final String s) throws IllegalMoveException
     {
         this(Piece.fromUnicode(s.charAt(0)),
-                new Position(s.substring(1, 2)),
+                new Position(s.substring(1, 3),Piece.fromUnicode(s.charAt(0))),
                 new Position(
                     s.substring(
-                        ('x'==s.substring(3,1).charAt(0)?5:4),
-                        2
+                        ('x'==s.substring(3,4).charAt(0))?5:4,
+                        ('x'==s.substring(3,4).charAt(0))?7:6
                 )),
-                ('x'==s.substring(3,1).charAt(0))?
-                        Piece.fromUnicode(s.substring(4,1).charAt(0)):
+                ('x'==s.substring(3,4).charAt(0))?
+                        Piece.fromUnicode(s.substring(4,5).charAt(0)):
                         Piece.none
         );
+
         if(s.charAt(0)!=piece.toString().charAt(0))throw new IllegalMoveException("There is no "+piece.type+" at "+from+",but"+piece.toString());
     }
     
@@ -54,7 +55,8 @@ public class Move
         }
         
         this.capture=capture;
-        if(this.piece.side==this.capture.side) throw new IllegalMoveException("Cannot capture own pieces");
+        if(this.piece.side!=Side.none)
+            if(this.piece.side==this.capture.side) throw new IllegalMoveException("Cannot capture own pieces");
     }
     
     public String toString()

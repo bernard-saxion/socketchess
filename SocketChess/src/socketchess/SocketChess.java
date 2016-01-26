@@ -13,7 +13,6 @@ import java.awt.TextField;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.Inet4Address;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -59,14 +58,18 @@ public class SocketChess extends Applet implements ActionListener
         
         add(notice);
     }
+    
+    Socket socket=null;
+    ServerSocket ssocket=null;
 
     @Override
     public void actionPerformed(ActionEvent ae)
     {
         if(ae.getSource()==asclient)
         {
-            try(final Socket socket=new Socket(addressf.getText(),Short.parseShort(portf.getText())))
+            try
             {
+                socket=new Socket(addressf.getText(),Short.parseShort(portf.getText()));
                 board=new Board(Side.white, new Opponent(Side.black, socket));
                 board.init(this);
             }
@@ -85,10 +88,11 @@ public class SocketChess extends Applet implements ActionListener
         }
         if(ae.getSource()==asserver)
         {
-            try(final ServerSocket socket=new ServerSocket(Short.parseShort(portf.getText())))
+            try
             {
+                ssocket=new ServerSocket(Short.parseShort(portf.getText()));
                 notice.setText("Waiting for opponent to connect");
-                board=new Board(Side.black, new Opponent(Side.white, socket));
+                board=new Board(Side.black, new Opponent(Side.white, ssocket));
                 board.init(this);
             }
             catch(final NumberFormatException nfe)

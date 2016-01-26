@@ -7,6 +7,7 @@ package socketchess;
 
 import java.applet.*;
 import java.awt.event.*;
+import java.io.IOException;
 
 
 /**
@@ -33,11 +34,66 @@ public class Board implements ActionListener
 	final static int butsize=80;
         final Side playingas;
         final Opponent opponent;
+        
+        boolean myturn=false;
 
         public Board(final Side playas, final Opponent opponent)
         {
             this.playingas=playas;
             this.opponent=opponent;
+            myturn=(Side.white==playingas);
+        }
+        
+        enum StopCondition
+        {
+            closed,
+            opponentdisconnect,
+            win, lose
+        }
+        
+        private void stopGame(final StopCondition cond)
+        {
+            throw new UnsupportedOperationException("Cannot stop game");
+        }
+        
+        private void waitForOpponentMove()
+        {
+                Move move=null;
+                do
+                {
+                    try
+                    {
+                        move=opponent.waitForMove();
+                    }
+                    catch(final IOException ioe)
+                    {
+                        ioe.printStackTrace();
+                        stopGame(StopCondition.opponentdisconnect);
+                        return;
+                    }
+                    try
+                    {
+                        domove(move);
+                    }
+                    catch(final IllegalMoveException ime)
+                    {
+                        ime.printStackTrace();
+                        move=null;
+                        try
+                        {
+                            opponent.objectLastMove();
+                        }
+                        catch(final IOException ioe)
+                        {
+                            ioe.printStackTrace();
+                            stopGame(StopCondition.opponentdisconnect);
+                            return;
+                        }
+                        continue;
+                    }
+                }
+                while(null==move);
+                myturn=!myturn;
         }
 
 	public void init(final Applet applet)
@@ -135,6 +191,7 @@ public class Board implements ActionListener
                 }
                 
                 applet.repaint();
+                if(!myturn)waitForOpponentMove();
 	}
 
         @Override
@@ -152,16 +209,26 @@ public class Board implements ActionListener
                     System.out.println("drop= "+drop);
                     try
                     {
-                    domove(new Move(selection.get_piece(), selection, drop,drop.get_piece()));
-                    drop=null;
-                    selection=null;
+                        final Move move = new Move(selection.get_piece(), selection, drop, drop.get_piece());
+                        domove(move);
+                        opponent.doMove(move);
+                        drop=null;
+                        selection=null;
+                        myturn= !myturn;
+                        waitForOpponentMove();
+                    }
+                    catch(final IOException ioe)
+                    {
+                        ioe.printStackTrace();
+                        stopGame(StopCondition.opponentdisconnect);
+                        return;
                     }
                     catch(IllegalMoveException ime)
                     { 
                         System.out.println("illegal move: "+ime.getMessage());
-                    drop=null;
-                    selection=null;
-                }
+                        drop=null;
+                        selection=null;
+                    }
                 }
             }
             else{
@@ -169,24 +236,33 @@ public class Board implements ActionListener
                     selection=(Position)event.getSource();
                     System.out.println("selection= "+selection);
                 }
-                if(selection!=null&&drop==null&&(((Position)event.getSource()).get_piece()==Piece.none||((Position)event.getSource()).get_piece()==Piece.white_pawn||((Position)event.getSource()).get_piece()==Piece.white_rook||((Position)event.getSource()).get_piece()==Piece.white_knight||((Position)event.getSource()).get_piece()==Piece.white_bishop||((Position)event.getSource()).get_piece()==Piece.white_queen||((Position)event.getSource()).get_piece()==Piece.white_king)){
+                if(myturn&&selection!=null&&drop==null&&(((Position)event.getSource()).get_piece()==Piece.none||((Position)event.getSource()).get_piece()==Piece.white_pawn||((Position)event.getSource()).get_piece()==Piece.white_rook||((Position)event.getSource()).get_piece()==Piece.white_knight||((Position)event.getSource()).get_piece()==Piece.white_bishop||((Position)event.getSource()).get_piece()==Piece.white_queen||((Position)event.getSource()).get_piece()==Piece.white_king)){
                     drop=(Position)event.getSource();
                     System.out.println("drop= "+drop);
                     try
                     {
-                    domove(new Move(selection.get_piece(), selection, drop, drop.get_piece()));
-                    drop=null;
-                    selection=null;
+                        final Move move = new Move(selection.get_piece(), selection, drop, drop.get_piece());
+                        domove(move);
+                        opponent.doMove(move);
+                        drop=null;
+                        selection=null;
+                        myturn= !myturn;
+                        waitForOpponentMove();
+                    }
+                    catch(final IOException ioe)
+                    {
+                        ioe.printStackTrace();
+                        stopGame(StopCondition.opponentdisconnect);
+                        return;
                     }
                     catch(IllegalMoveException ime)
                     { 
                         System.out.println("illegal move: "+ime.getMessage());
-                    drop=null;
-                    selection=null;
+                        drop=null;
+                        selection=null;
                     }
                 }
-        }
-        
+            }
         }
         
         public void domove(final Move move) throws IllegalMoveException
@@ -196,7 +272,7 @@ public class Board implements ActionListener
             Position to=position(move.to);
             if(from.get_piece()!=move.piece)throw new IllegalMoveException("No "+move.piece+" on "+from);
             if(to.get_piece()!=move.capture)throw new IllegalMoveException(to.toString()+" has "+to.get_piece()+" not "+move.capture);
-               
+            
             
             System.out.println("moving piece");
             to.set_piece(move.piece);

@@ -9,7 +9,6 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Font;
 import static java.awt.Font.PLAIN;
-import javax.swing.JLabel;
 
 /**
  *
@@ -50,6 +49,12 @@ public class Position extends Button
     public Position(final String pos)
     {
         this(pos.charAt(0),(byte)(pos.charAt(1)-'0'));
+    }
+    
+    public Position(final String pos, final Piece piece)
+    {
+        this(pos);
+        this.piece=piece;
     }
     
     public char column()

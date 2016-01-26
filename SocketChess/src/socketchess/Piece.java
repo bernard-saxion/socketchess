@@ -105,7 +105,7 @@ public class Piece {
             case '\u265C': return Piece.black_bishop;
             case '\u265D': return Piece.black_knight;
             case '\u265E': return Piece.black_rook;
-            case '\u2660': return Piece.black_pawn;
+            case '\u265F': return Piece.black_pawn;
         }
     }
     
